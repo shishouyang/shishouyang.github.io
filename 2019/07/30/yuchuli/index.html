@@ -10,6 +10,8 @@
 
     <!--Description-->
     
+        <meta name="description" content="1.数据预处理def data_processing(): datapath1 = “D:\lunwen\code\movies3.csv” df = pd.read_csv(datapath1) list_title = [str1.strip()[-5:-1] for str1 in df[‘t">
+    
 
     <!--Author-->
     
@@ -40,7 +42,7 @@
 
     <!-- Title -->
     
-    <title>Archives: 2019/7 - 石守洋的博客</title>
+    <title>石守洋的博客</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -127,9 +129,7 @@
 <div class="container">
 
     <!-- Main Content -->
-    
-
-<div class="row">
+    <div class="row">
     <div class="col-sm-12">
 
         <!--Title and Logo-->
@@ -137,52 +137,52 @@
     <div class="logo">
         <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
         
-            <h1 id="main-title" class="title">2019/7</h1>
-        
     </div>
 </header>
 
-        <section class="main archive-container">
+        <section class="main">
             
-                <div class="archive-post">
-    <a href="/2019/07/29/mkdown1/">
-        <span class="archive-date">
-            Jul 2019
-        </span>
-        Untitled
-    </a>
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2019/07/30/yuchuli/">
+                Untitled
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-07-30</span>
+            
+            
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h1 id="1-数据预处理"><a href="#1-数据预处理" class="headerlink" title="1.数据预处理"></a>1.数据预处理</h1><p>def data_processing():<br> datapath1 = “D:\lunwen\code\movies3.csv”<br> df = pd.read_csv(datapath1)<br> list_title = [str1.strip()[-5:-1] for str1 in df[‘title’]]<br> list_year = [int(float(i)) for i in list_title]<br> df = df.drop(‘title’, 1)<br> df[‘year’] = list_year<br> datapath2 = “D:\lunwen\code\ratings.csv”<br> data = pd.read_csv(datapath2)<br> mov_cnt = pd.value_counts(data[‘movieId’])<br> mov_cnt1 = mov_cnt[mov_cnt&lt;=5]<br> all_mov = list(data[‘movieId’])<br> mov = list(set(all_mov) - set(list(mov_cnt1.index)))<br> mask = data[‘movieId’].isin(mov)<br> dataNew = data[mask]<br> dataNew = dataNew.reset_index(np.arange(dataNew.shape[0]),drop=True)<br> user_list = list(dataNew[‘userId’])<br> num_user = Counter(user_list)<br> Ndel_user = []<br> for k, v in num_user.items():<br> if v &gt;= 20:<br> Ndel_user.append(k)<br> mask2 = dataNew[‘userId’].isin(Ndel_user)<br> dataNew2 = dataNew[mask2]<br>return dataNew2, df<br>def train_test_split():<br> data = data_processing()[0]</p>
+<h3 id="have-weight"><a href="#have-weight" class="headerlink" title="#have weight"></a>#have weight</h3><h3 id="data-‘rating’-data-‘rating’-gt-3-1"><a href="#data-‘rating’-data-‘rating’-gt-3-1" class="headerlink" title="data[‘rating’][data[‘rating’] &gt;= 3] = 1"></a>data[‘rating’][data[‘rating’] &gt;= 3] = 1</h3><p> data[‘rating’][data[‘rating’] &lt; 3] = 0.3<br> data_3items = data[[“userId”, “movieId”, “rating”]]<br> User_group = data.groupby(“userId”).count()<br> len_list = sorted(list(set(data[‘userId’])))<br>dic = dict(zip(len_list, User_group[“movieId”]))<br> df_train = pd.DataFrame()<br> df_test = pd.DataFrame()<br> data_3items = shuffle(data_3items)<br> for i in len_list:<br> df1 = data_3items[data_3items[“userId”] == i][:int(dic[i] * 0.8)]<br> df_train = pd.concat((df_train, df1))<br> df2 = data_3items[data_3items[“userId”] == i][int(dic[i] * 0.8):]<br> df_test = pd.concat((df_test, df2))<br> return df_train, df_test</p>
+
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
 </div>
-            
-                <div class="archive-post">
-    <a href="/2019/07/29/readme/">
-        <span class="archive-date">
-            Jul 2019
-        </span>
-        Untitled
-    </a>
-</div>
-            
-                <div class="archive-post">
-    <a href="/2019/07/30/ee/">
-        <span class="archive-date">
-            Jul 2019
-        </span>
-        Untitled
-    </a>
-</div>
-            
-                <div class="archive-post">
-    <a href="/2019/07/30/yuchuli/">
-        <span class="archive-date">
-            Jul 2019
-        </span>
-        Untitled
-    </a>
-</div>
-            
         </section>
+
     </div>
 </div>
+
 
 </div>
 
