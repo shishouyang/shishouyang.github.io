@@ -147,6 +147,36 @@
 
     <div class="post-header index">
         <h1 class="title">
+            <a href="/2019/07/30/2guanlianwajue/">
+                Untitled
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-07-30</span>
+            
+            
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <p>##2.关联挖掘<br>def createC1(dataSet):<br>C1 = []<br> for transaction in dataSet:<br> for item in transaction:<br> if not [item] in C1:<br> C1.append([item])<br> C1.sort()<br> return map(frozenset, C1)<br>def scanD(D, Ck, minSupport):<br> ssCnt = {}<br> for tid in D:<br> for can in Ck:<br> if can.issubset(tid):<br> if not ssCnt.has_key(can): ssCnt[can]=1<br> else: ssCnt[can] += 1<br> numItems = float(len(D))<br> retList = []<br> supportData = {}<br> for key in ssCnt:<br> support = ssCnt[key]/numItems<br> if support &gt;= minSupport:<br> retList.insert(0,key)<br> supportData[key] = support<br> return retList, supportData<br>def aprioriGen(Lk, k): </p>
+<p>retList = []<br> lenLk = len(Lk)<br> for i in range(lenLk):<br> for j in range(i+1, lenLk):<br> L1 = list(Lk[i])[:k-2]; L2 = list(Lk[j])[:k-2]<br> L1.sort(); L2.sort()<br> if L1==L2:<br> retList.append(Lk[i] | Lk[j])<br> return retList<br>def apriori(dataSet, minSupport = 0.2):<br> C1 = createC1(dataSet)<br> D = map(set, dataSet)<br> L1, supportData = scanD(D, C1, minSupport)<br> L = [L1]<br> k = 2<br> while (len(L[k-2]) &gt; 0):<br> Ck = aprioriGen(L[k-2], k)<br> Lk, supK = scanD(D, Ck, minSupport)<br> supportData.update(supK)<br> L.append(Lk)<br> k += 1<br> return L, supportData<br>def calcConf(freqSet, H, supportData, brl, minConf=0.3):<br> prunedH = []<br> for conseq in H:<br> conf = supportData[freqSet]/supportData[freqSet-conseq]<br> if conf &gt;= minConf:<br> print freqSet-conseq,’–&gt;’,conseq,’conf:’,conf<br> brl.append((freqSet-conseq, conseq, conf))<br> prunedH.append(conseq)<br> return prunedH<br>def rulesFromConseq(freqSet, H, supportData, brl, minConf=0.3):<br> m = len(H[0])<br> if (len(freqSet) &gt; (m + 1)):<br> Hmp1 = aprioriGen(H, m+1)<br> Hmp1 = calcConf(freqSet, Hmp1, supportData, brl, minConf)<br> if (len(Hmp1) &gt; 1): </p>
+<p>rulesFromConseq(freqSet, Hmp1, supportData, brl, minConf)<br>def generateRules(L, supportData, minConf=0.3):<br> bigRuleList = []<br> for i in range(1, len(L)):<br> for freqSet in L[i]:<br> H1 = [frozenset([item]) for item in freqSet]<br> if (i &gt; 1):<br> rulesFromConseq(freqSet, H1, supportData, bigRuleList,<br>minConf)<br> else:<br> calcConf(freqSet, H1, supportData, bigRuleList, minConf)<br> return bigRuleList<br>def cal_lift(df_train):<br> item_list = []<br> user_list = list(set(sorted(df_train[‘userId’])))<br> for user in user_list:<br> item_list.append(list(df_train[df_train[‘userId’]==user][‘movieId’]))<br> L,suppData = apriori(item_list, minSupport=0.1)<br> rules = generateRules(L, suppData, minConf=0.4)<br> bigRuleList = generateRules(L, suppData, minConf=0.4)<br> user_mov = dict()<br> for i in list(set(df_train[‘userId’])):<br> user_mov.setdefault(i, {})<br> user_mov[i] = list(df_train[df_train[‘userId’] == i][‘movieId’])<br> dict_len = len(user_mov)<br> bigRuleListNew = []<br> for i in range(len(bigRuleList)):<br> cnt = 0<br> b = list(bigRuleList[i][1])<br> conf = bigRuleList[i][2]<br> for k,v in user_mov.items():<br> if set(b).issubset(set(v)):<br> cnt += 1<br> P_y = 1.0 * cnt / dict_len<br> lift = 1.0 * conf / P_y<br> a = list(bigRuleList[i])+[lift]<br> bigRuleListNew.append(a)</p>
+<p>if bigRuleListNew[i][3] &lt; 1:<br> bigRuleListNew.remove(bigRuleListNew[i])<br> return bigRuleListNew<br>def recom_res(df_train):<br> user_list = list(set(sorted(df_train[‘userId’])))<br> bigRuleListNew = cal_lift(df_train)<br> user_recom = {}<br> for user in user_list:<br> user_recom.setdefault(user, {})<br> recom_list = [];<br> Uitem = list(df_train[df_train[‘userId’]==user][‘movieId’])<br> for i in range(len(bigRuleListNew)):<br> rule_item = [list(bigRuleListNew[i][0])[0]]<br> if len(list(set(Uitem) &amp; set(rule_item))) == 0:<br> user_recom[user] = {}<br> continue<br> else:<br> for j in range(len(list(bigRuleListNew[i][1]))):<br> user_recom[user][list(bigRuleListNew[i][1])[j]]=<br>bigRuleListNew[i][3]<br>return user_recom</p>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
             <a href="/2019/07/30/6/">
                 Untitled
             </a>
@@ -254,36 +284,6 @@
         <div class="content">
             <p>#3.基于加权二部图的推荐<br>def bi_recom(df_train):<br> train = df_train.pivot(‘userId’, ‘movieId’, ‘rating’)<br> train.fillna(0, inplace=True)<br> train_mat = np.array(train)<br> user_list_sort = list(set(df_train[‘userId’]))<br> item_list_sort = list(sorted(set(df_train[‘movieId’])))<br> recom = {}<br> target = {}<br> user_item = train_mat<br> user_item_INor = copy.copy(user_item)<br> item_user = user_item.T<br> user_item_UNor = copy.copy(item_user)<br> for i in range(user_item.shape[1]):<br> user_item_INor[:,i] = user_item[:,i] / np.sum(user_item[:,i])</p>
 <p>for j in range(item_user.shape[1]):<br> user_item_UNor[:,j] = item_user[:,j] / np.sum(item_user[:,j])<br> for index1 in range(user_item.shape[0]):<br> recom.setdefault(user_list_sort[index1],{})<br> user_recom_items = {}<br> user = user_item[index1]<br> zero_index = [index for index, i in enumerate(user) if i==0]<br> for jj in range(20):<br> one_res = np.dot(user_item_INor, user)<br> target_user = np.dot(user_item_UNor, one_res)<br> target_score = target_user[zero_index]<br> target_items = [item_list_sort[index] for index in zero_index]<br> dict_target_score = dict(zip(target_items, target_score))<br> recom.setdefault(user_list_sort[index1], {})<br> for item, score in sorted(dict_target_score.items(), key=lambda x:x[1],<br>/reverse=True)[:20]:<br> recom[user_list_sort[index1]][item] = score<br>return recom</p>
-
-        </div>
-    
-
-</div>
-            
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2019/07/30/2guanlianwajue/">
-                Untitled
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2019-07-30</span>
-            
-            
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            <p>#2.关联挖掘<br>def createC1(dataSet):<br>C1 = []<br> for transaction in dataSet:<br> for item in transaction:<br> if not [item] in C1:<br> C1.append([item])<br> C1.sort()<br> return map(frozenset, C1)<br>def scanD(D, Ck, minSupport):<br> ssCnt = {}<br> for tid in D:<br> for can in Ck:<br> if can.issubset(tid):<br> if not ssCnt.has_key(can): ssCnt[can]=1<br> else: ssCnt[can] += 1<br> numItems = float(len(D))<br> retList = []<br> supportData = {}<br> for key in ssCnt:<br> support = ssCnt[key]/numItems<br> if support &gt;= minSupport:<br> retList.insert(0,key)<br> supportData[key] = support<br> return retList, supportData<br>def aprioriGen(Lk, k): </p>
-<p>retList = []<br> lenLk = len(Lk)<br> for i in range(lenLk):<br> for j in range(i+1, lenLk):<br> L1 = list(Lk[i])[:k-2]; L2 = list(Lk[j])[:k-2]<br> L1.sort(); L2.sort()<br> if L1==L2:<br> retList.append(Lk[i] | Lk[j])<br> return retList<br>def apriori(dataSet, minSupport = 0.2):<br> C1 = createC1(dataSet)<br> D = map(set, dataSet)<br> L1, supportData = scanD(D, C1, minSupport)<br> L = [L1]<br> k = 2<br> while (len(L[k-2]) &gt; 0):<br> Ck = aprioriGen(L[k-2], k)<br> Lk, supK = scanD(D, Ck, minSupport)<br> supportData.update(supK)<br> L.append(Lk)<br> k += 1<br> return L, supportData<br>def calcConf(freqSet, H, supportData, brl, minConf=0.3):<br> prunedH = []<br> for conseq in H:<br> conf = supportData[freqSet]/supportData[freqSet-conseq]<br> if conf &gt;= minConf:<br> print freqSet-conseq,’–&gt;’,conseq,’conf:’,conf<br> brl.append((freqSet-conseq, conseq, conf))<br> prunedH.append(conseq)<br> return prunedH<br>def rulesFromConseq(freqSet, H, supportData, brl, minConf=0.3):<br> m = len(H[0])<br> if (len(freqSet) &gt; (m + 1)):<br> Hmp1 = aprioriGen(H, m+1)<br> Hmp1 = calcConf(freqSet, Hmp1, supportData, brl, minConf)<br> if (len(Hmp1) &gt; 1): </p>
-<p>rulesFromConseq(freqSet, Hmp1, supportData, brl, minConf)<br>def generateRules(L, supportData, minConf=0.3):<br> bigRuleList = []<br> for i in range(1, len(L)):<br> for freqSet in L[i]:<br> H1 = [frozenset([item]) for item in freqSet]<br> if (i &gt; 1):<br> rulesFromConseq(freqSet, H1, supportData, bigRuleList,<br>minConf)<br> else:<br> calcConf(freqSet, H1, supportData, bigRuleList, minConf)<br> return bigRuleList<br>def cal_lift(df_train):<br> item_list = []<br> user_list = list(set(sorted(df_train[‘userId’])))<br> for user in user_list:<br> item_list.append(list(df_train[df_train[‘userId’]==user][‘movieId’]))<br> L,suppData = apriori(item_list, minSupport=0.1)<br> rules = generateRules(L, suppData, minConf=0.4)<br> bigRuleList = generateRules(L, suppData, minConf=0.4)<br> user_mov = dict()<br> for i in list(set(df_train[‘userId’])):<br> user_mov.setdefault(i, {})<br> user_mov[i] = list(df_train[df_train[‘userId’] == i][‘movieId’])<br> dict_len = len(user_mov)<br> bigRuleListNew = []<br> for i in range(len(bigRuleList)):<br> cnt = 0<br> b = list(bigRuleList[i][1])<br> conf = bigRuleList[i][2]<br> for k,v in user_mov.items():<br> if set(b).issubset(set(v)):<br> cnt += 1<br> P_y = 1.0 * cnt / dict_len<br> lift = 1.0 * conf / P_y<br> a = list(bigRuleList[i])+[lift]<br> bigRuleListNew.append(a)</p>
-<p>if bigRuleListNew[i][3] &lt; 1:<br> bigRuleListNew.remove(bigRuleListNew[i])<br> return bigRuleListNew<br>def recom_res(df_train):<br> user_list = list(set(sorted(df_train[‘userId’])))<br> bigRuleListNew = cal_lift(df_train)<br> user_recom = {}<br> for user in user_list:<br> user_recom.setdefault(user, {})<br> recom_list = [];<br> Uitem = list(df_train[df_train[‘userId’]==user][‘movieId’])<br> for i in range(len(bigRuleListNew)):<br> rule_item = [list(bigRuleListNew[i][0])[0]]<br> if len(list(set(Uitem) &amp; set(rule_item))) == 0:<br> user_recom[user] = {}<br> continue<br> else:<br> for j in range(len(list(bigRuleListNew[i][1]))):<br> user_recom[user][list(bigRuleListNew[i][1])[j]]=<br>bigRuleListNew[i][3]<br>return user_recom</p>
 
         </div>
     
@@ -464,6 +464,10 @@ except:
         <ul>
             
             <li>
+                <a class="footer-post" href="/2019/07/30/2guanlianwajue/">Untitled</a>
+            </li>
+            
+            <li>
                 <a class="footer-post" href="/2019/07/30/6/">Untitled</a>
             </li>
             
@@ -473,10 +477,6 @@ except:
             
             <li>
                 <a class="footer-post" href="/2019/07/30/4xinxishang/">Untitled</a>
-            </li>
-            
-            <li>
-                <a class="footer-post" href="/2019/07/30/3jiaquan/">Untitled</a>
             </li>
             
         </ul>
