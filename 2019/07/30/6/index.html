@@ -3,222 +3,350 @@
 
 <!-- Head tag -->
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <!--Description-->
-  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!--Author-->
-  
-  <meta name="author" content="John Doe">
-  
+    <!--Description-->
+    
+        <meta name="description" content="#6.加入时间指数修正def add_time_factor(): datapath1 = “D:\lunwen\code\ratings.csv” dataR = pd.read_csv(datapath1) list_time=[int(time.strftime(“%Y-%m-%d %H:%M">
+    
 
-  <!--Open Graph Title-->
-  
-      <meta property="og:title" content="石守洋的博客">
-  
-  <!--Open Graph Description-->
-  
-  <!--Open Graph Site Name-->
-  <meta property="og:site_name" content="石守洋的博客">
-  <!--Type page-->
-  
-      <meta property="og:type" content="website">
-  
-  <!--Page Cover-->
-  
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="石守洋的博客">
+    
 
-  <!-- Title -->
-  
-  <title>石守洋的博客</title>
+    <!--Open Graph Description-->
+    
 
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="石守洋的博客">
 
-  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
+    <!--Type page-->
+    
+        <meta property="og:type" content="website">
+    
 
-  <!-- Custom CSS/Sass -->
-  <link rel="stylesheet" href="/css/style.css">
+    <!--Page Cover-->
+    
 
-  <!----------------------------
-  https://github.com/GallenHu/hexo-theme-Daily
+    <meta name="twitter:card" content="summary">
+    
 
- _____            _   _
-|  __ \          (_) | |
-| |  | |   __ _   _  | |  _   _
-| |  | |  / _` | | | | | | | | |
-| |__| | | (_| | | | | | | |_| |
-|_____/   \__,_| |_| |_|  \__, |
-                          __/ |
-                         |___/
+    <!-- Title -->
+    
+    <title>石守洋的博客</title>
 
-    --------------------------->
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
 
 </head>
 
 
 <body>
 
-  <!-- Nav -->
-  <header class="site-header">
-  <div class="header-inside">
-    <div class="logo">
-      <a href="/" rel="home">
-        
-        <img src="https://hexo.io/logo.svg" alt="石守洋的博客" height="60">
-        
-      </a>
-    </div>
-    <!-- Navigation -->
-    <nav class="navbar">
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse">
-        <ul class="navbar-nav">
-          
-          
-            <li>
-              <a href="/.">
-                
-                  home
-                
-              </a>
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
             </li>
-          
-            <li>
-              <a href="/archives">
-                
-                  archive
-                
-              </a>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
             </li>
-          
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
         </ul>
-      </div>
-      <!-- /.navbar-collapse -->
-    </nav>
-    <div class="button-wrap">
-      <button class="menu-toggle">Primary Menu</button>
     </div>
-  </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
 </header>
 
+        <section class="main">
+            
+<div class="post">
 
-  <!-- Main Content -->
-  <div class="content-area">
-  <div class="post">
-    <!-- Post Content -->
-    <div class="container">
-      <article>
-        <!-- Title date & tags -->
-        <div class="post-header">
-          <h1 class="entry-title">
-            Untitled
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2019/07/30/6/">
+                Untitled
+            </a>
+        </h1>
+        <div class="post-info">
             
-          </h1>
-          <p class="posted-on">
-          2019-07-30
-          </p>
-          <div class="tags-links">
+                <span class="date">2019-07-30</span>
             
-              
             
-          </div>
+            
         </div>
-        <!-- Post Main Content -->
-        <div class="entry-content has_line_number">
-          <p>#6.加入时间指数修正<br>def add_time_factor():<br> datapath1 = “D:\lunwen\code\ratings.csv”<br> dataR = pd.read_csv(datapath1)<br> list_time=[int(time.strftime(“%Y-%m-%d %H:%M:%S”,time.localtime(tim))[:4])<br>for tim in dataR[‘timestamp’]]<br> del dataR[‘timestamp’]<br> dataR[‘rate_year’] = list_time<br> datapath2 = “D:\lunwen\code\movies3.csv”<br> dataM = pd.read_csv(datapath2)<br> list_title = [str1.strip()[-5:-1] for str1 in dataM[‘title’]]<br> list_year = [int(float(i)) for i in list_title]<br> dataM = dataM.drop(‘title’, 1)<br> dataM[‘year’] = list_year<br> mov = list(dataM[‘movieId’])<br> mov_pyear = dict(zip(mov, list_year))</p>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <p>#6.加入时间指数修正<br>def add_time_factor():<br> datapath1 = “D:\lunwen\code\ratings.csv”<br> dataR = pd.read_csv(datapath1)<br> list_time=[int(time.strftime(“%Y-%m-%d %H:%M:%S”,time.localtime(tim))[:4])<br>for tim in dataR[‘timestamp’]]<br> del dataR[‘timestamp’]<br> dataR[‘rate_year’] = list_time<br> datapath2 = “D:\lunwen\code\movies3.csv”<br> dataM = pd.read_csv(datapath2)<br> list_title = [str1.strip()[-5:-1] for str1 in dataM[‘title’]]<br> list_year = [int(float(i)) for i in list_title]<br> dataM = dataM.drop(‘title’, 1)<br> dataM[‘year’] = list_year<br> mov = list(dataM[‘movieId’])<br> mov_pyear = dict(zip(mov, list_year))</p>
 <p> list_user = list(set(dataR[‘userId’]))<br> user_rateYear = {}<br> for user in list_user:<br> user_rateYear.setdefault(user, 0)<br> Myear = np.mean(list(dataR[dataR[‘userId’] == user][‘rate_year’]))<br> user_rateYear[user] = Myear<br> return user_rateYear, mov_pyear<br>def recom_final(df_train):<br> rank = bi_recom(df_train)<br> user_rateYear, mov_pyear = add_time_factor()<br> rank_new = {}<br> for k1, v1 in rank.items():<br> rank_new.setdefault(k1, {})<br> user_mean = user_rateYear[k1]<br> for k2, v2 in v1.items():<br> time_f = np.exp(-0.05 * np.abs(user_mean-mov_pyear[k2]))<br> rank_new[k1][k2] = v2*time_f<br> rank_new[k1] = dict(sorted(rank_new[k1].items(), key=lambda x:x[1],<br>reverse=True)[:20])<br>return rank_new<br>def cal_evaluate(recom):<br> recall_all = []; recom_mov_all = []<br> user_list = list(set(sorted(df_train[‘userId’])))<br> for i in user_list:<br> if len(list(recom[i])) == 0:<br> continue<br> else:<br> really_mov = list(df_test[df_test[‘userId’] == i][‘movieId’])<br> recom_mov = list(recom[i].keys())<br> recom_mov_all.append(recom_mov)<br> target_mov = list(set(really_mov) &amp; set(recom_mov))<br> recall = 1.0 * len(target_mov) / len(really_mov)<br> recall_all.append(recall)<br> recom_unique = [x for lis in recom_mov_all for x in lis]<br> cover_per = 1.0 * len({}.fromkeys(recom_unique).keys()) / 3099<br> print ‘召回率为’, np.mean(recall_all)<br>print ‘覆盖率为’, cover_per</p>
 
-        </div>
-      </article>
     </div>
+
+    
+
+    
+
     <!-- Comments -->
-    <div class="container">
-      
-<section id="comment">
-  <!-- <h1 class="title">Comments</h1> -->
+    
 
-  
-</section>
-
+</div>
+        </section>
 
     </div>
-    <!-- Pre or Next -->
-    <div class="nav-links">
-      
-        <div class="nav-previous">
-          <a href="/2019/07/30/2guanlianwajue/" rel="prev"><span class="meta-arraw meta-arraw-left"></span> Older Posts</a>
-        </div>
-      
-      
-        <div class="nav-next">
-          <a href="/2019/07/30/5hunhetuijian/" rel="prev">Newer Posts <span class="meta-arraw meta-arraw-right"></span></a>
-        </div>
-      
-    </div>
-
-  </div>
 </div>
 
 
-  <!-- Footer -->
-  <!-- Footer-widgets -->
-<div class="footer-widgets">
-  <div class="row inside-wrapper">
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">关于本站</h1>
-        <div class="custom-widget-content">
-          
-          <ul><li><a href="https://github.com/GallenHu/hexo-theme-Daily/wiki">如何自定义这里的内容(配置教程)?</a></li></ul>
-        </div>
-      </aside>
-    </div>
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">Contact</h1>
-        <div class="widget-text">
-          
-            
-              <a href="https://github.com/GallenHu" class="icon icon-github" target="_blank">github</a>
-            
-          
-        </div>
-      </aside>
-    </div>
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">Search</h1>
-        <div class="widget-text">
-          <form onSubmit="return appDaily.submitSearch('')">
-            <p>
-              <input type="text" placeholder="search..." id="homeSearchInput">
-            </p>
-            <!-- <input type="submit" value="GO"> -->
-          </form>
-        </div>
-      </aside>
-    </div>
-  </div>
 </div>
+
 <!-- Footer -->
-<footer class="site-info">
-  <p>
-    <span>石守洋的博客 &copy; 2019</span>
-    
-      <span class="split">|</span>
-      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
-    
-  </p>
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2019/07/30/2guanlianwajue/">Untitled</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/07/30/6/">Untitled</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/07/30/5hunhetuijian/">Untitled</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2019/07/30/4xinxishang/">Untitled</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/klugjo/hexo-theme-alpha-dust">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://plus.google.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-google-plus"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:test@example.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Untitled. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </footer>
 
+<!-- After footer scripts -->
 
-  <!-- After footer scripts -->
-  <!-- scripts -->
-<script src="/js/app.js"></script>
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
 
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
 
 
 
