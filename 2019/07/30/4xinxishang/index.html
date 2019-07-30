@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
+  
+
+  <!--Author-->
+  
+  <meta name="author" content="John Doe">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="石守洋的博客">
+  
+  <!--Open Graph Description-->
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="石守洋的博客">
+  <!--Type page-->
+  
+      <meta property="og:type" content="website">
+  
+  <!--Page Cover-->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Title -->
+  
+  <title>石守洋的博客</title>
+
+
+  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
+
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!----------------------------
+  https://github.com/GallenHu/hexo-theme-Daily
+
+ _____            _   _
+|  __ \          (_) | |
+| |  | |   __ _   _  | |  _   _
+| |  | |  / _` | | | | | | | | |
+| |__| | | (_| | | | | | | |_| |
+|_____/   \__,_| |_| |_|  \__, |
+                          __/ |
+                         |___/
+
+    --------------------------->
+
+</head>
+
+
+<body>
+
+  <!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
+    <div class="logo">
+      <a href="/" rel="home">
+        
+        <img src="https://hexo.io/logo.svg" alt="石守洋的博客" height="60">
+        
+      </a>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/.">
+                
+                  home
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/archives">
+                
+                  archive
+                
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Untitled
+            
+          </h1>
+          <p class="posted-on">
+          2019-07-30
+          </p>
+          <div class="tags-links">
+            
+              
+            
+          </div>
+        </div>
+        <!-- Post Main Content -->
+        <div class="entry-content has_line_number">
+          <p>#4.融合信息熵的内容相似度后的基于项目的推荐<br>def content_sim(df_train):<br> train = df_train.pivot(‘userId’, ‘movieId’, ‘rating’)<br> train.fillna(0, inplace=True)<br> train_mat = np.array(train)<br> user_item = train_mat<br> len_list = []; mean_list = []<br> for j in range(user_item.shape[1]):<br> len_col = len(np.nonzero(user_item[:, j])[0])<br> len_list.append(len_col)<br> sum_col = np.sum(user_item[:, j])<br> mean_col = 1.0 * sum_col / len_col<br> mean_list.append(mean_col)<br> cut_points1 = [0, 10, 50, 100, 200]<br> len_label = pd.cut(len_list, cut_points1, labels=[‘-‘, ‘+’, ‘++’, ‘+++’])<br> cut_points2 = [0,1,3,5]<br> mean_label = pd.cut(mean_list, cut_points2, labels=[‘low’, ‘medium’, ‘high’])<br> train_mov = df_train[‘movieId’].values</p>
+<p>dataN = data_processing()[1]<br> mask = dataN[‘movieId’].isin(train_mov)<br> data_train = dataN[mask]<br> data_train = data_train.reset_index(np.arange(data_train.shape[0]), drop=True)<br> list_year = data_train[‘year’]<br> genres_list1 = []; genres_list2 = []<br> for i in range(len(data_train)):<br> word = data_train[‘genres’][i].split(‘|’)<br> if len(word) == 1:<br> genres_list1.append(word[0])<br> genres_list2.append(0)<br> else:<br> genres_list1.append(word[0])<br> genres_list2.append(word[1])<br> pop={‘year’:list_year,’genres1’:genres_list1,’genres2’:genres_list2,<br>‘pop_degree’:len_label, ‘good_degree’:mean_label}<br> df_elements = pd.DataFrame(pop)<br> I_list = sorted(list(set(df_train[‘movieId’])))<br> a_list = [list(df_elements.loc[i]) for i in I_list]<br>genres_dict = dict()<br>cols = df_elements.columns.tolist()<br>for col in cols:<br>var = list(df_elements[col])<br>for i in range(len(var)):<br>a = var[i]<br>p = var.count(a)/len(var)<br>entropy = -1 * p * np.log2(p) - (1-p) * np.log2(1-p)<br>genres_dict[a] = entropy<br> sim = []<br> flag = 0; b1 =0<br>while (1):<br> if flag == 1:<br> break<br> else:<br> for i in range(b1, b1+100):<br> print (i)<br> if (i == 1005):</p>
+<p>flag = 1<br> break<br> else:<br> a = a_list[i]<br> zeroCnt = a.count(0)<br> de1 = len(a) - zeroCnt<br> for j in range(i+1, len(a_list)):<br> b = a_list[j]<br> zeroCnt = b.count(0)<br> de2 = len(b) - zeroCnt<br> c = set(a).intersection(b)</p>
+<p> #nu = len(c)<br> weight_score = sum([genres_dict[i] for i in c])<br> score = weight_score / ((de1 <em>* 0.5) * (de2 ** 0.5))<br> sim.append(score)<br> b1 = b1 + 100<br>return sim, user_item<br>def euclidean_metric_similary(user1, user2):<br> distance = np.sqrt(np.sum(np.square(user1 - user2)))<br> sim = 1.0 / (1.0 + distance)<br> return sim<br>def Person_similary(user1, user2):<br> fenzi = np.sum((user1 - np.mean(user1)) * (user2 - np.mean(user2)))<br> fenmu=np.sqrt(np.sum(np.square(user1-np.mean(user1))))</em><br>np.sqrt(np.sum(np.square(user2 - np.mean(user2))))<br> sim = 1.0 * fenzi / fenmu<br> return sim<br>def Person_similary_Improv(user1, user2, lamda):<br> fenzi = np.sum((user1 - np.mean(user1)) * (user2 - np.mean(user2)))<br> fenmu=np.sqrt(np.sum(np.square(user1-np.mean(user1))))*<br>np.sqrt(np.sum(np.square(user2 - np.mean(user2))))<br> sim1 = 1.0 * fenzi / fenmu<br> a = np.nonzero(user1)[0]<br> b = np.nonzero(user2)[0]<br> same_mov = [i for i in a if i in b]<br> sim = sim1 * math.log(lamda +len(same_mov))<br> return sim</p>
+<p>def ItemBased_sim(df_train):<br> user_item = content_sim(df_train)[1]<br> item_index = [i for i in range(user_item.shape[1])]<br> item_list_sort = sorted(list(set(df_train[‘movieId’])))<br> index_item = dict(zip(item_index, item_list_sort))<br> sim = []<br> for i in range(user_item.shape[1]):<br> for j in range(i+1, user_item.shape[1]):</p>
+<p> #sim1    =euclidean_metric_similary(user_item[:, i], user_item[:, j])</p>
+<p> #sim1 = Person_similary(user_item[:, i], user_item[:, j])<br> sim1 = Person_similary_Improv(user_item[:, i], user_item[:, j], 2.5)<br> sim.append(sim1)<br> return sim<br>def mix_sim_recom(df_train):<br> train = df_train.pivot(‘userId’, ‘movieId’, ‘rating’)<br> train.fillna(0, inplace=True)<br> train_mat = np.array(train)<br> user_item = train_mat<br> sim1 = content_sim(df_train)[0]<br> sim2 = ItemBased_sim(df_train)<br> sim = (0.3 * np.array(sim1)) + (0.7 * np.array(sim2))<br> sim_up = np.zeros((user_item.shape[1], user_item.shape[1]))<br> index = 0<br> for i in range(sim_up.shape[0]):<br> for j in range(i+1, sim_up.shape[0]):<br> sim_up[j, i] = sim[index]<br> index += 1<br> sim_down = np.zeros((user_item.shape[1], user_item.shape[1]))<br> index = 0<br> for i in range(sim_down.shape[0]):<br> for j in range(i+1, sim_down.shape[0]):<br> sim_down[i, j] = sim[index]<br> index += 1<br> sim_mat = sim_up + sim_down<br> mov = sorted(list(set(df_train[‘movieId’])))<br> rank = dict()<br> index = [i for i in range(user_item.shape[0])]</p>
+<p>user_list = list(set(sorted(df_train[‘userId’])))<br> index_user = dict(zip(index, user_list))<br> for i in range(user_item.shape[0]):<br> rank.setdefault(index_user[i], {})<br> user1 = user_item[i]<br> nonzero_list = np.nonzero(user1)[0]<br> for j in nonzero_list:<br> a = sim_mat[j]<br> score = user1[j]<br> mov_sim = dict(zip(mov, a))<br> for k,v insorted(mov_sim.items(),key=lambda,x:x[1],reverse=True)[0:20]:<br> rank[index_user[i]].setdefault(k, 0)<br> rank[index_user[i]][k] += v*score<br> rank[index_user[i]] = dict(sorted(rank[index_user[i]].items(), key=lambda<br>x:x[1], reverse=True)[:20])<br>return rank</p>
+
+        </div>
+      </article>
+    </div>
+    <!-- Comments -->
+    <div class="container">
+      
+<section id="comment">
+  <!-- <h1 class="title">Comments</h1> -->
+
+  
+</section>
+
+
+    </div>
+    <!-- Pre or Next -->
+    <div class="nav-links">
+      
+        <div class="nav-previous">
+          <a href="/2019/07/30/5hunhetuijian/" rel="prev"><span class="meta-arraw meta-arraw-left"></span> Older Posts</a>
+        </div>
+      
+      
+        <div class="nav-next">
+          <a href="/2019/07/30/3jiaquan/" rel="prev">Newer Posts <span class="meta-arraw meta-arraw-right"></span></a>
+        </div>
+      
+    </div>
+
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <!-- Footer-widgets -->
+<div class="footer-widgets">
+  <div class="row inside-wrapper">
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">关于本站</h1>
+        <div class="custom-widget-content">
+          
+          <ul><li><a href="https://github.com/GallenHu/hexo-theme-Daily/wiki">如何自定义这里的内容(配置教程)?</a></li></ul>
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Contact</h1>
+        <div class="widget-text">
+          
+            
+              <a href="https://github.com/GallenHu" class="icon icon-github" target="_blank">github</a>
+            
+          
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Search</h1>
+        <div class="widget-text">
+          <form onSubmit="return appDaily.submitSearch('')">
+            <p>
+              <input type="text" placeholder="search..." id="homeSearchInput">
+            </p>
+            <!-- <input type="submit" value="GO"> -->
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>石守洋的博客 &copy; 2019</span>
+    
+      <span class="split">|</span>
+      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
+    
+  </p>
+</footer>
+
+
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script>
+
+
+
+
+
+</body>
+
+</html>

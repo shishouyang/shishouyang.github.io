@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
+  
+
+  <!--Author-->
+  
+  <meta name="author" content="John Doe">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="石守洋的博客">
+  
+  <!--Open Graph Description-->
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="石守洋的博客">
+  <!--Type page-->
+  
+      <meta property="og:type" content="website">
+  
+  <!--Page Cover-->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Title -->
+  
+  <title>石守洋的博客</title>
+
+
+  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
+
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!----------------------------
+  https://github.com/GallenHu/hexo-theme-Daily
+
+ _____            _   _
+|  __ \          (_) | |
+| |  | |   __ _   _  | |  _   _
+| |  | |  / _` | | | | | | | | |
+| |__| | | (_| | | | | | | |_| |
+|_____/   \__,_| |_| |_|  \__, |
+                          __/ |
+                         |___/
+
+    --------------------------->
+
+</head>
+
+
+<body>
+
+  <!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
+    <div class="logo">
+      <a href="/" rel="home">
+        
+        <img src="https://hexo.io/logo.svg" alt="石守洋的博客" height="60">
+        
+      </a>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/.">
+                
+                  home
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/archives">
+                
+                  archive
+                
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Untitled
+            
+          </h1>
+          <p class="posted-on">
+          2019-07-30
+          </p>
+          <div class="tags-links">
+            
+              
+            
+          </div>
+        </div>
+        <!-- Post Main Content -->
+        <div class="entry-content has_line_number">
+          <p>#6.加入时间指数修正<br>def add_time_factor():<br> datapath1 = “D:\lunwen\code\ratings.csv”<br> dataR = pd.read_csv(datapath1)<br> list_time=[int(time.strftime(“%Y-%m-%d %H:%M:%S”,time.localtime(tim))[:4])<br>for tim in dataR[‘timestamp’]]<br> del dataR[‘timestamp’]<br> dataR[‘rate_year’] = list_time<br> datapath2 = “D:\lunwen\code\movies3.csv”<br> dataM = pd.read_csv(datapath2)<br> list_title = [str1.strip()[-5:-1] for str1 in dataM[‘title’]]<br> list_year = [int(float(i)) for i in list_title]<br> dataM = dataM.drop(‘title’, 1)<br> dataM[‘year’] = list_year<br> mov = list(dataM[‘movieId’])<br> mov_pyear = dict(zip(mov, list_year))</p>
+<p> list_user = list(set(dataR[‘userId’]))<br> user_rateYear = {}<br> for user in list_user:<br> user_rateYear.setdefault(user, 0)<br> Myear = np.mean(list(dataR[dataR[‘userId’] == user][‘rate_year’]))<br> user_rateYear[user] = Myear<br> return user_rateYear, mov_pyear<br>def recom_final(df_train):<br> rank = bi_recom(df_train)<br> user_rateYear, mov_pyear = add_time_factor()<br> rank_new = {}<br> for k1, v1 in rank.items():<br> rank_new.setdefault(k1, {})<br> user_mean = user_rateYear[k1]<br> for k2, v2 in v1.items():<br> time_f = np.exp(-0.05 * np.abs(user_mean-mov_pyear[k2]))<br> rank_new[k1][k2] = v2*time_f<br> rank_new[k1] = dict(sorted(rank_new[k1].items(), key=lambda x:x[1],<br>reverse=True)[:20])<br>return rank_new<br>def cal_evaluate(recom):<br> recall_all = []; recom_mov_all = []<br> user_list = list(set(sorted(df_train[‘userId’])))<br> for i in user_list:<br> if len(list(recom[i])) == 0:<br> continue<br> else:<br> really_mov = list(df_test[df_test[‘userId’] == i][‘movieId’])<br> recom_mov = list(recom[i].keys())<br> recom_mov_all.append(recom_mov)<br> target_mov = list(set(really_mov) &amp; set(recom_mov))<br> recall = 1.0 * len(target_mov) / len(really_mov)<br> recall_all.append(recall)<br> recom_unique = [x for lis in recom_mov_all for x in lis]<br> cover_per = 1.0 * len({}.fromkeys(recom_unique).keys()) / 3099<br> print ‘召回率为’, np.mean(recall_all)<br>print ‘覆盖率为’, cover_per</p>
+
+        </div>
+      </article>
+    </div>
+    <!-- Comments -->
+    <div class="container">
+      
+<section id="comment">
+  <!-- <h1 class="title">Comments</h1> -->
+
+  
+</section>
+
+
+    </div>
+    <!-- Pre or Next -->
+    <div class="nav-links">
+      
+        <div class="nav-previous">
+          <a href="/2019/07/30/2guanlianwajue/" rel="prev"><span class="meta-arraw meta-arraw-left"></span> Older Posts</a>
+        </div>
+      
+      
+        <div class="nav-next">
+          <a href="/2019/07/30/5hunhetuijian/" rel="prev">Newer Posts <span class="meta-arraw meta-arraw-right"></span></a>
+        </div>
+      
+    </div>
+
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <!-- Footer-widgets -->
+<div class="footer-widgets">
+  <div class="row inside-wrapper">
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">关于本站</h1>
+        <div class="custom-widget-content">
+          
+          <ul><li><a href="https://github.com/GallenHu/hexo-theme-Daily/wiki">如何自定义这里的内容(配置教程)?</a></li></ul>
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Contact</h1>
+        <div class="widget-text">
+          
+            
+              <a href="https://github.com/GallenHu" class="icon icon-github" target="_blank">github</a>
+            
+          
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Search</h1>
+        <div class="widget-text">
+          <form onSubmit="return appDaily.submitSearch('')">
+            <p>
+              <input type="text" placeholder="search..." id="homeSearchInput">
+            </p>
+            <!-- <input type="submit" value="GO"> -->
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>石守洋的博客 &copy; 2019</span>
+    
+      <span class="split">|</span>
+      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
+    
+  </p>
+</footer>
+
+
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script>
+
+
+
+
+
+</body>
+
+</html>
