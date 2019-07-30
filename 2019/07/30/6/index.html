@@ -10,7 +10,7 @@
 
     <!--Description-->
     
-        <meta name="description" content="1.数据预处理def data_processing(): datapath1 = “D:\lunwen\code\movies3.csv” df = pd.read_csv(datapath1) list_title = [str1.strip()[-5:-1] for str1 in df[‘t">
+        <meta name="description" content="#6.加入时间指数修正def add_time_factor(): datapath1 = “D:\lunwen\code\ratings.csv” dataR = pd.read_csv(datapath1) list_time=[int(time.strftime(“%Y-%m-%d %H:%M">
     
 
     <!--Author-->
@@ -146,7 +146,7 @@
 
     <div class="post-header">
         <h1 class="title">
-            <a href="/2019/07/30/yuchuli/">
+            <a href="/2019/07/30/6/">
                 Untitled
             </a>
         </h1>
@@ -165,8 +165,8 @@
         
 
         <!-- Post Content -->
-        <h1 id="1-数据预处理"><a href="#1-数据预处理" class="headerlink" title="1.数据预处理"></a>1.数据预处理</h1><p>def data_processing():<br> datapath1 = “D:\lunwen\code\movies3.csv”<br> df = pd.read_csv(datapath1)<br> list_title = [str1.strip()[-5:-1] for str1 in df[‘title’]]<br> list_year = [int(float(i)) for i in list_title]<br> df = df.drop(‘title’, 1)<br> df[‘year’] = list_year<br> datapath2 = “D:\lunwen\code\ratings.csv”<br> data = pd.read_csv(datapath2)<br> mov_cnt = pd.value_counts(data[‘movieId’])<br> mov_cnt1 = mov_cnt[mov_cnt&lt;=5]<br> all_mov = list(data[‘movieId’])<br> mov = list(set(all_mov) - set(list(mov_cnt1.index)))<br> mask = data[‘movieId’].isin(mov)<br> dataNew = data[mask]<br> dataNew = dataNew.reset_index(np.arange(dataNew.shape[0]),drop=True)<br> user_list = list(dataNew[‘userId’])<br> num_user = Counter(user_list)<br> Ndel_user = []<br> for k, v in num_user.items():<br> if v &gt;= 20:<br> Ndel_user.append(k)<br> mask2 = dataNew[‘userId’].isin(Ndel_user)<br> dataNew2 = dataNew[mask2]<br>return dataNew2, df<br>def train_test_split():<br> data = data_processing()[0]</p>
-<h3 id="have-weight"><a href="#have-weight" class="headerlink" title="#have weight"></a>#have weight</h3><h3 id="data-‘rating’-data-‘rating’-gt-3-1"><a href="#data-‘rating’-data-‘rating’-gt-3-1" class="headerlink" title="data[‘rating’][data[‘rating’] &gt;= 3] = 1"></a>data[‘rating’][data[‘rating’] &gt;= 3] = 1</h3><p> data[‘rating’][data[‘rating’] &lt; 3] = 0.3<br> data_3items = data[[“userId”, “movieId”, “rating”]]<br> User_group = data.groupby(“userId”).count()<br> len_list = sorted(list(set(data[‘userId’])))<br>dic = dict(zip(len_list, User_group[“movieId”]))<br> df_train = pd.DataFrame()<br> df_test = pd.DataFrame()<br> data_3items = shuffle(data_3items)<br> for i in len_list:<br> df1 = data_3items[data_3items[“userId”] == i][:int(dic[i] * 0.8)]<br> df_train = pd.concat((df_train, df1))<br> df2 = data_3items[data_3items[“userId”] == i][int(dic[i] * 0.8):]<br> df_test = pd.concat((df_test, df2))<br> return df_train, df_test</p>
+        <p>#6.加入时间指数修正<br>def add_time_factor():<br> datapath1 = “D:\lunwen\code\ratings.csv”<br> dataR = pd.read_csv(datapath1)<br> list_time=[int(time.strftime(“%Y-%m-%d %H:%M:%S”,time.localtime(tim))[:4])<br>for tim in dataR[‘timestamp’]]<br> del dataR[‘timestamp’]<br> dataR[‘rate_year’] = list_time<br> datapath2 = “D:\lunwen\code\movies3.csv”<br> dataM = pd.read_csv(datapath2)<br> list_title = [str1.strip()[-5:-1] for str1 in dataM[‘title’]]<br> list_year = [int(float(i)) for i in list_title]<br> dataM = dataM.drop(‘title’, 1)<br> dataM[‘year’] = list_year<br> mov = list(dataM[‘movieId’])<br> mov_pyear = dict(zip(mov, list_year))</p>
+<p> list_user = list(set(dataR[‘userId’]))<br> user_rateYear = {}<br> for user in list_user:<br> user_rateYear.setdefault(user, 0)<br> Myear = np.mean(list(dataR[dataR[‘userId’] == user][‘rate_year’]))<br> user_rateYear[user] = Myear<br> return user_rateYear, mov_pyear<br>def recom_final(df_train):<br> rank = bi_recom(df_train)<br> user_rateYear, mov_pyear = add_time_factor()<br> rank_new = {}<br> for k1, v1 in rank.items():<br> rank_new.setdefault(k1, {})<br> user_mean = user_rateYear[k1]<br> for k2, v2 in v1.items():<br> time_f = np.exp(-0.05 * np.abs(user_mean-mov_pyear[k2]))<br> rank_new[k1][k2] = v2*time_f<br> rank_new[k1] = dict(sorted(rank_new[k1].items(), key=lambda x:x[1],<br>reverse=True)[:20])<br>return rank_new<br>def cal_evaluate(recom):<br> recall_all = []; recom_mov_all = []<br> user_list = list(set(sorted(df_train[‘userId’])))<br> for i in user_list:<br> if len(list(recom[i])) == 0:<br> continue<br> else:<br> really_mov = list(df_test[df_test[‘userId’] == i][‘movieId’])<br> recom_mov = list(recom[i].keys())<br> recom_mov_all.append(recom_mov)<br> target_mov = list(set(really_mov) &amp; set(recom_mov))<br> recall = 1.0 * len(target_mov) / len(really_mov)<br> recall_all.append(recall)<br> recom_unique = [x for lis in recom_mov_all for x in lis]<br> cover_per = 1.0 * len({}.fromkeys(recom_unique).keys()) / 3099<br> print ‘召回率为’, np.mean(recall_all)<br>print ‘覆盖率为’, cover_per</p>
 
     </div>
 
@@ -204,19 +204,19 @@
         <ul>
             
             <li>
-                <a class="footer-post" href="/2019/07/30/yuchuli/">Untitled</a>
+                <a class="footer-post" href="/2019/07/30/6/">Untitled</a>
             </li>
             
             <li>
-                <a class="footer-post" href="/2019/07/30/ee/">Untitled</a>
+                <a class="footer-post" href="/2019/07/30/5hunhetuijian/">Untitled</a>
             </li>
             
             <li>
-                <a class="footer-post" href="/2019/07/29/readme/">Untitled</a>
+                <a class="footer-post" href="/2019/07/30/4xinxishang/">Untitled</a>
             </li>
             
             <li>
-                <a class="footer-post" href="/2019/07/29/mkdown1/">Untitled</a>
+                <a class="footer-post" href="/2019/07/30/3jiaquan/">Untitled</a>
             </li>
             
         </ul>
